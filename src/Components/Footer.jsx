@@ -2,8 +2,7 @@
 function Footer(){
     
     return(
-        <div style={{height: "100px", border: "solid black 1px"}}>
-             Footer
+        <div className="bg-gray-100 h-24 border-t-4 border-gray-300">
         </div>
     )
 }

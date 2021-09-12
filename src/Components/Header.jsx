@@ -40,31 +40,31 @@ class Header extends React.Component{
 
     render(){
         return(
-            <div style={{height: "100px", border: "solid black 1px"}}>
-                <p>header</p>
-                <div>
-                    <select onChange={this.searchBy} name="" id="">
-                        <option value="city" defaultValue>city</option>
-                        <option value="coordinates">coordinates</option>
-                    </select>
-                </div>
-                
-                {this.state.searchBy === "city" &&
-                <form onSubmit={this.searchCity} action="">
-                    <input type="text" placeholder="City"/>
-                    <button>search</button>
-                </form>}
-                {this.state.searchBy === "coordinates" && 
-                    <form action="" onSubmit={this.searchCoordinates}>
-                        <input type="text" placeholder="lon" />
-                        <input type="text" placeholder="lat" />
-                        <button>search</button>
-                    </form>
-                }
+            <div className="flex flex-col justify-center items-center bg-gray-100 border-b-4 border-gray-300">
+                <div className="my-10">
+                    {this.state.searchBy === "city" &&
+                    <form onSubmit={this.searchCity} action="">
+                        <input className="border rounded-tl rounded-bl py-0.5 px-2" type="text" placeholder="City"/>
+                        <button className="border py-0.5 px-2 rounded-tr rounded-br">search</button>
+                    </form>}
+                    {this.state.searchBy === "coordinates" && 
+                        <form action="" onSubmit={this.searchCoordinates}>
+                            <input className="border rounded-tl rounded-bl py-0.5 px-2" type="text" placeholder="lon" />
+                            <input className="border py-0.5 px-2" type="text" placeholder="lat" />
+                            <button className="border py-0.5 px-2 rounded-tr rounded-br">search</button>
+                        </form>
+                    }
+                    <div>
+                        <select className="border rounded py-0.5 px-2 mt-4" onChange={this.searchBy} name="" id="">
+                            <option value="city" defaultValue>city</option>
+                            <option value="coordinates">coordinates</option>
+                        </select>
+                    </div>
 
-                {this.state.redirect === true &&
-                    <Redirect to={this.state.searchStr}
-                />}
+                    {this.state.redirect === true &&
+                        <Redirect to={this.state.searchStr}
+                    />}
+                </div>
 
                 {/* {this.state.redirect && this.state.searchBy === "city" &&
                     <Redirect to={{
