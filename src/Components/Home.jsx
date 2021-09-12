@@ -7,10 +7,11 @@ function Home(){
         <div style={{minHeight: "100px", border: "solid black 1px"}}>
            <p>Home</p>
            <div>
-               {/* <p>weather preview</p>
-               <p>movies preview</p> */}
                 <Link to="/weather">
                     <span>weather</span>
+                </Link>
+                <Link to="/movies">
+                    <span>movies</span>
                 </Link>
            </div>
         </div>
