@@ -7,7 +7,7 @@ function Home(){
         <div style={{minHeight: "100px", border: "solid black 1px"}}>
            <p>Home</p>
            <div>
-                <Link to="/weather">
+                <Link to="/weather?searchBy=city&city=jerusalem">
                     <span>weather</span>
                 </Link>
                 <Link to="/movies">

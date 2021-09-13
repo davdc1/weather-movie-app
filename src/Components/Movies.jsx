@@ -53,7 +53,7 @@ class Movies extends React.Component{
     //`http://img.omdbapi.com/?t=superman&plot=full&apikey=dce24c91`
     //`https://www.omdbapi.com/?i=tt3896198&apikey=dce24c91`
     fetchMoviesData = () =>{
-        fetch(`http://img.omdbapi.com/?t=superman&plot=full&apikey=dce24c91`)
+        fetch(`http://www.omdbapi.com/?s=superman&page=27&apikey=dce24c91`)
         .then(res => res.json())
         .then(
             (result) => {
