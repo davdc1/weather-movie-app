@@ -1,36 +1,12 @@
 import React from "react"
-import { Link } from 'react-router-dom'
 import WeatherFull from "./WeatherFull";
 import WeatherCard from "./WeatherCard";
-
-
-/*
-display data.
-two different components: for city & coordinates search.
-saved cities.
-clean code.
-check for bugs.
-*/
 
 
 class Weather extends React.Component{
     constructor(props){
         super(props)
-
-        this.params = this.parseQuery().city;
-        console.log("params:", this.params);
-
-        console.log("searchby:", this.props.location.search);
-        
-        // this.city = "london";
-        // this.lat = 31.77;
-        // this.lon= 35.21;
-        // this.url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&APPID=c2152ce33eec94f628bcb40cda3da446`;
-        // this.url2 = `https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&APPID=c2152ce33eec94f628bcb40cda3da446`;
-        
         this.state= {
-            searchBy: "",
-            city: this.params,
             loading: true,
             reqUrl: this.createReqUrl(this.parseQuery()),
             fullDet: false,
