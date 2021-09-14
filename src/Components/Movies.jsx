@@ -1,35 +1,25 @@
 import React from "react"
-
-
-/*
-display data.
-two different components: for city & coordinates search.
-saved cities.
-clean code.
-check for bugs.
-*/
+import MovieCard from "./MovieCard";
 
 
 class Movies extends React.Component{
     constructor(props){
         super(props)
-
-        // this.params = this.parseQuery().city;
-        // console.log("params:", this.params);
-
-        // console.log("searchby:", this.props.location.search);
         
-        // this.city = "london";
-        // this.lat = 31.77;
-        // this.lon= 35.21;
-        // this.url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&APPID=c2152ce33eec94f628bcb40cda3da446`;
-        // this.url2 = `https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&APPID=c2152ce33eec94f628bcb40cda3da446`;
-        
-        this.state= {
-            //searchBy: "",
-            //city: this.params,
-            loading: true
+        this.par = this.parseQuery();
+        console.log("par", this.par);
+
+        this.state = {
+            reqUrl: "",
+            loading: true,
+            page: this.par.page,
+            search: this.par.search
         }
+    }
+
+    createReqUrl(parsedQueryObj){
+        console.log("parsed", parsedQueryObj);
+        return `http://www.omdbapi.com/?s=${this.state.search}&page=${this.state.page}&apikey=dce24c91`
     }
 
     parseQuery(){
@@ -37,65 +27,109 @@ class Movies extends React.Component{
         return Object.fromEntries(urlSearchParams.entries());
     }
 
-    // componentDidUpdate(prevProps){
-    //     if(prevProps.location.search !== this.props.location.search){
-    //         console.log("new props:", this.parseQuery().city);
-    //         //this.setState({city: this.parseQuery().city}, () => this.fetchWeatherData())
-    //     }
-    // }
+    componentDidUpdate(prevProps){
+        console.log("did update");
+        if(prevProps.location.search !== this.props.location.search){
+            this.setState({
+                reqUrl: this.createReqUrl(this.parseQuery()),
+                page: this.parseQuery().page,
+                search: this.parseQuery().search
+            }, () => this.fetchMovieData())
+        }
+    }
 
     componentDidMount(){
-        console.log("loading at did mount:", this.state.loading);
-        this.fetchMoviesData();
+        // if(this.props.location.state && this.props.location.state.from === "moviePage"){
+        //     this.setState({reqUrl: `http://www.omdbapi.com/?s=${this.props.location.state.search}&page=${this.props.location.state.page}&apikey=dce24c91`}, () => this.fetchMovieData())
+        // }else{
+        //     this.setState({reqUrl: this.createReqUrl(this.parseQuery())}, () => this.fetchMovieData())
+        // }
+        this.setState({
+            reqUrl: this.createReqUrl(this.parseQuery()),
+            page: this.parseQuery().page,
+            search: this.parseQuery().search
+        }, () => this.fetchMovieData())
     }
 
     // `http://www.omdbapi.com/?t=da&y=1999&plot=full&apikey=dce24c91`
     //`http://img.omdbapi.com/?t=superman&plot=full&apikey=dce24c91`
-    //`https://www.omdbapi.com/?i=tt3896198&apikey=dce24c91`
-    fetchMoviesData = () =>{
-        fetch(`http://www.omdbapi.com/?s=superman&page=27&apikey=dce24c91`)
+    //`https://www.omdbapi.com/?i=tt2975590&apikey=dce24c91`
+
+
+    fetchMovieData = () =>{
+        fetch(this.state.reqUrl)
         .then(res => res.json())
         .then(
             (result) => {
-                this.setState({
-                    loading: false,
-                    data: result,
-                });
+                if(result.Response === "True"){
+                    this.setState({
+                        loading: false,
+                        data: result,
+                        error: false
+                    });
+                }else{
+                    this.setState({
+                        loading: false,
+                        data: result,
+                        error: true,
+                        errorDes: result.Error
+                    })
+                }
                 console.log("result: ", result);
-                // if(this.state.data.message === "Not Found"){
-                //     this.props.notFound();
-                // }
             },
             (error) => {
                 this.setState({
                     loading: false,
-                    error: true
+                    error: true,
+                    errorDes: "somthing went wrong"
                 });
-                console.log("fetch error");
             }
         )
     }
 
 
+    nextPage = () => {
+        if(this.state.page < (this.state.data.totalResults / 10)){
+            this.setState({page: this.state.page + 1}, () => this.fetchMovieData())
+        }
+    }
+    prevPage = () => {
+        if(this.state.page > 1){
+            this.setState({page: this.state.page - 1}, () => this.fetchMovieData())
+        }
+    }
+
     render(){
-        {this.state.loading && console.log("loading")}
-        //{!this.state.loading && console.log("render:",this.state.data.main, "state:",this.state)}
+        
         return(
-            <div style={{minHeight: "100px", border: "solid black 1px"}}>
-                Movies
-                city: {this.state.city}
-                {this.state.error && <span>error</span> }
-                <p>{this.state.loading && <span>loading</span>}</p>
-                {/* <div>{!this.state.loading && 
-                    <div>
-                        <p> {new Date().toLocaleDateString()}</p>
-                        <p>last update: {new Date().toLocaleTimeString()}</p>
-                        <p>weather: {this.state.data.weather[0].description}</p>
-                        <p>temp: {this.state.data.main.temp}</p>
-                        <p>wind: speed: {this.state.data.wind.speed} direction: {this.state.data.wind.deg}</p>
+            <div className="">
+                <div className="flex flex-wrap justify-center">
+                    {this.state.loading && [1, 2, 3, 4, 5, 6, 7, 8].map((num, index)=> {
+                        return (
+                            <div key={index.toString()} className="w-52 h-74 border rounded bg-gray-300">
+                                <p>Loading</p>
+                            </div>
+                        )
+                    })}
+
+                    {this.state.error && <p>{this.state.errorDes}</p>}
+                    
+                    {!this.state.loading && !this.state.error &&
+                        this.state.data.Search.map((movie, index) => {
+                            console.log("movie:", movie);
+                            return(
+                                <MovieCard key={index.toString()} movie={movie} page={this.state.page} search={this.state.search} />
+                            )
+                        })
+                    }
+
+                </div>
+                {!this.state.loading && !this.state.error && this.state.data.totalResults &&
+                    <div className="mb-8">
+                        <button onClick={this.prevPage} className="text-lg mx-2 border rounded px-2 py-1">prev</button>
+                        <button onClick={this.nextPage} className="text-lg mx-2 border rounded px-2 py-1">next</button>
                     </div>
-                
-                }</div> */}
+                }
             </div>
         )
     }

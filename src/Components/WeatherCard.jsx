@@ -8,7 +8,7 @@
                 <span className="my-3 text-2xl">{Math.round(data.main.temp) + "" + String.fromCharCode(176)} </span>
                 <span>{data.weather[0].description}</span>
                 <span>wind: {data.wind.speed} kt</span>
-                <button className="text-xs my-2" onClick={showFullDet}>see more details</button>
+                <button className="border rounded text-xs my-2" onClick={showFullDet}>see more details</button>
                 <span className="text-xs mt-6">auto updates every 15 min</span>
                 <span className="text-xs">last update: {new Date().toLocaleTimeString()}</span>
             </div>

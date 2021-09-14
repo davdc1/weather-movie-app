@@ -1,18 +1,10 @@
 
-import { Link } from 'react-router-dom'
-
 function Home(){
     
     return(
-        <div style={{minHeight: "100px", border: "solid black 1px"}}>
-           <p>Home</p>
+        <div className="flex items-center justify-center h-44">
            <div>
-                <Link to="/weather?searchBy=city&city=jerusalem">
-                    <span>weather</span>
-                </Link>
-                <Link to="/movies">
-                    <span>movies</span>
-                </Link>
+                <p className="text-2xl">Welcome</p>
            </div>
         </div>
     )

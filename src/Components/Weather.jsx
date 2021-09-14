@@ -58,10 +58,13 @@ class Weather extends React.Component{
                     errorDes: ""
                 });
             }else{
-                this.setState({loading: false, error: true, errorDes: result.cod + " " + result.message})
+                this.setState({
+                    loading: false,
+                    error: true,
+                    errorDes: result.cod + " " + result.message
+                })
             }
-        },
-            (error) => {
+        },(error) => {
                 this.setState({
                     loading: false,
                     error: true,
@@ -80,17 +83,20 @@ class Weather extends React.Component{
 
     render(){
         return(
-            <div className="flex justify-center my-20">
-                {!this.state.loading && !this.state.error &&
-                 <WeatherFull
-                        showFullDet={this.showFullDet}
-                        data={this.state.data}
-                        show={this.state.fullDet}
-                    />}
-                {this.state.error && <span>{this.state.errorDes}</span> }
-                <p>{this.state.loading && <span>loading</span>}</p>
-                {!this.state.loading && !this.state.error &&
-                    <WeatherCard data={this.state.data} showFullDet={this.showFullDet} />}
+            <div className="flex flex-col items-center justify-center">
+                <div className="my-20">
+                    {!this.state.loading && !this.state.error &&
+                    <WeatherFull
+                            showFullDet={this.showFullDet}
+                            data={this.state.data}
+                            show={this.state.fullDet}
+                        />}
+                    {this.state.error && <span>{this.state.errorDes}</span> }
+                    <p>{this.state.loading && <span>loading</span>}</p>
+                    {!this.state.loading && !this.state.error &&
+                        <WeatherCard data={this.state.data} showFullDet={this.showFullDet} />}
+
+                </div>
             </div>
         )
     }
