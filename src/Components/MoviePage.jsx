@@ -63,7 +63,6 @@ class MoviePage extends React.Component{
                                         <div key={index.toString()} className="flex flex-col items-start my-3">
                                             <p className="font-semibold">Ratings: </p>
                                             {this.state.data[key].map((ratings, index) => {
-                                                console.log("key map", ratings);
                                                 return(
                                                     <p key={index.toString()}>
                                                         <span className="font-semibold">{this.state.data[key][index].Source}:  </span>
