@@ -1,12 +1,10 @@
 import React from "react"
-import { Link } from "react-router-dom"
 
 class MoviePage extends React.Component{
     constructor(props){
-        // console.log("p,m,p", props.match.params.id);
+        
         super(props)
-        console.log("props page", this.props);
-        this.search = "superman"
+        
         this.state = {
             loading: true,
             error: false
@@ -26,55 +24,48 @@ class MoviePage extends React.Component{
                     loading: false,
                     data: result,
                     error: false,
-                    errorDes: ""
+                    errorDes: "unable to present data"
                 });
-                console.log("result: ", result);
             },
             (error) => {
                 this.setState({
                     loading: false,
                     error: true,
-                    errorDes: ""
+                    errorDes: "something went wrong"
                 });
-                console.log("fetch error");
             }
         )
+    }
+
+    goBack = () => {
+        this.props.history.goBack();
     }
 
     render(){
         return(
             <div>
-                {/* <Link to={{
-                    pathname: `/movies?search=${this.props.location.state.search}&page=${this.props.location.state.page}`,
-                    state: {
-                        from: "moviePage",
-                        page: this.props.location.state.page,
-                        search: this.props.location.state.search
-                        }
-                    }}>
-                    <button>back</button>
-                </Link> */}
+                <button onClick={this.goBack}>back</button>
                 <div className="flex flex-col items-start border m-10 p-5">
-                    {this.state.error && <p>error</p>}
+                    {this.state.error && <p>{this.state.errorDes}</p>}
                     {this.state.loading && <p className="text-xl self-center">Loading</p>}
                     {!this.state.loading && !this.state.error &&
-                        Object.keys(this.state.data).map(key => {
+                        Object.keys(this.state.data).map((key, index) => {
                             if(key !== "Poster"){
                                 if(key !== "Ratings"){
                                     return (
-                                    <p>
+                                    <p key={index.toString()}>
                                         <span className="font-semibold">{key}:  </span>
                                         <span>{this.state.data[key]}</span>
                                     </p>
                                     )
                                 }else{
                                     return(
-                                        <div className="flex flex-col items-start my-3">
+                                        <div key={index.toString()} className="flex flex-col items-start my-3">
                                             <p className="font-semibold">Ratings: </p>
                                             {this.state.data[key].map((ratings, index) => {
                                                 console.log("key map", ratings);
                                                 return(
-                                                    <p>
+                                                    <p key={index.toString()}>
                                                         <span className="font-semibold">{this.state.data[key][index].Source}:  </span>
                                                         <span>{this.state.data[key][index].Value}</span>
                                                     </p>

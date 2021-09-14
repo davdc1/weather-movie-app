@@ -1,8 +1,8 @@
 import React from "react"
-import {Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import WeatherNavBar from "./WeatherNavBar";
 import MoviesNavBar from "./MoviesNavBar";
-import { render } from "@testing-library/react";
+
 
 
 class Header extends React.Component{
@@ -35,6 +35,5 @@ class Header extends React.Component{
 
     }
 }
-
 
 export default Header

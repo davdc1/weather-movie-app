@@ -23,7 +23,6 @@ class Weather extends React.Component{
 
     parseQuery(){
         let urlSearchParams = new URLSearchParams(this.props.location.search);
-        console.log("query:", Object.fromEntries(urlSearchParams.entries()));
         return Object.fromEntries(urlSearchParams.entries());
     }
 
@@ -49,7 +48,6 @@ class Weather extends React.Component{
         fetch(this.state.reqUrl)
         .then(res => res.json())
         .then((result) => {
-            console.log("result:", result);
             if(result.cod === 200){
                 this.setState({
                     loading: false,

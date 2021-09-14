@@ -7,7 +7,6 @@ class Movies extends React.Component{
         super(props)
         
         this.par = this.parseQuery();
-        console.log("par", this.par);
 
         this.state = {
             reqUrl: "",
@@ -18,7 +17,6 @@ class Movies extends React.Component{
     }
 
     createReqUrl(parsedQueryObj){
-        //console.log("parsed", parsedQueryObj);
         return `http://www.omdbapi.com/?s=${this.state.search}&page=${this.state.page}&apikey=dce24c91`
     }
 
@@ -28,10 +26,8 @@ class Movies extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        console.log("did update");
         if(prevProps.location.search !== this.props.location.search){
             this.setState({
-                //reqUrl: this.createReqUrl(this.parseQuery()),
                 page: this.parseQuery().page,
                 search: this.parseQuery().search
             }, () => this.fetchMovieData())
@@ -39,13 +35,8 @@ class Movies extends React.Component{
     }
 
     componentDidMount(){
-        // if(this.props.location.state && this.props.location.state.from === "moviePage"){
-        //     this.setState({reqUrl: `http://www.omdbapi.com/?s=${this.props.location.state.search}&page=${this.props.location.state.page}&apikey=dce24c91`}, () => this.fetchMovieData())
-        // }else{
-        //     this.setState({reqUrl: this.createReqUrl(this.parseQuery())}, () => this.fetchMovieData())
-        // }
+        
         this.setState({
-            //reqUrl: this.createReqUrl(this.parseQuery()),
             page: this.parseQuery().page,
             search: this.parseQuery().search
         }, () => this.fetchMovieData())
@@ -71,7 +62,6 @@ class Movies extends React.Component{
                         errorDes: result.Error
                     })
                 }
-                console.log("result: ", result);
             },
             (error) => {
                 this.setState({
