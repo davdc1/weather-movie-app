@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 class MoviePage extends React.Component{
     constructor(props){
-        console.log("p,m,p", props.match.params.id);
+        // console.log("p,m,p", props.match.params.id);
         super(props)
         console.log("props page", this.props);
         this.search = "superman"
@@ -44,7 +44,7 @@ class MoviePage extends React.Component{
     render(){
         return(
             <div>
-                <Link to={{
+                {/* <Link to={{
                     pathname: `/movies?search=${this.props.location.state.search}&page=${this.props.location.state.page}`,
                     state: {
                         from: "moviePage",
@@ -53,7 +53,7 @@ class MoviePage extends React.Component{
                         }
                     }}>
                     <button>back</button>
-                </Link>
+                </Link> */}
                 <div className="flex flex-col items-start border m-10 p-5">
                     {this.state.error && <p>error</p>}
                     {this.state.loading && <p className="text-xl self-center">Loading</p>}

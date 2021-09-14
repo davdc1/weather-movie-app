@@ -12,13 +12,13 @@ class Movies extends React.Component{
         this.state = {
             reqUrl: "",
             loading: true,
-            page: this.par.page,
+            page: parseInt(this.par.page),
             search: this.par.search
         }
     }
 
     createReqUrl(parsedQueryObj){
-        console.log("parsed", parsedQueryObj);
+        //console.log("parsed", parsedQueryObj);
         return `http://www.omdbapi.com/?s=${this.state.search}&page=${this.state.page}&apikey=dce24c91`
     }
 
@@ -31,7 +31,7 @@ class Movies extends React.Component{
         console.log("did update");
         if(prevProps.location.search !== this.props.location.search){
             this.setState({
-                reqUrl: this.createReqUrl(this.parseQuery()),
+                //reqUrl: this.createReqUrl(this.parseQuery()),
                 page: this.parseQuery().page,
                 search: this.parseQuery().search
             }, () => this.fetchMovieData())
@@ -45,19 +45,15 @@ class Movies extends React.Component{
         //     this.setState({reqUrl: this.createReqUrl(this.parseQuery())}, () => this.fetchMovieData())
         // }
         this.setState({
-            reqUrl: this.createReqUrl(this.parseQuery()),
+            //reqUrl: this.createReqUrl(this.parseQuery()),
             page: this.parseQuery().page,
             search: this.parseQuery().search
         }, () => this.fetchMovieData())
     }
 
-    // `http://www.omdbapi.com/?t=da&y=1999&plot=full&apikey=dce24c91`
-    //`http://img.omdbapi.com/?t=superman&plot=full&apikey=dce24c91`
-    //`https://www.omdbapi.com/?i=tt2975590&apikey=dce24c91`
-
 
     fetchMovieData = () =>{
-        fetch(this.state.reqUrl)
+        fetch(this.createReqUrl())
         .then(res => res.json())
         .then(
             (result) => {
@@ -81,7 +77,7 @@ class Movies extends React.Component{
                 this.setState({
                     loading: false,
                     error: true,
-                    errorDes: "somthing went wrong"
+                    errorDes: "something went wrong"
                 });
             }
         )
@@ -89,13 +85,14 @@ class Movies extends React.Component{
 
 
     nextPage = () => {
-        if(this.state.page < (this.state.data.totalResults / 10)){
-            this.setState({page: this.state.page + 1}, () => this.fetchMovieData())
+        if(parseInt(this.state.page) < (this.state.data.totalResults / 10)){
+            this.setState({page: parseInt(this.state.page) + 1}, () => this.fetchMovieData())
         }
+        
     }
     prevPage = () => {
-        if(this.state.page > 1){
-            this.setState({page: this.state.page - 1}, () => this.fetchMovieData())
+        if(parseInt(this.state.page) > 1){
+            this.setState({page: parseInt(this.state.page) - 1}, () => this.fetchMovieData())
         }
     }
 
@@ -104,9 +101,9 @@ class Movies extends React.Component{
         return(
             <div className="">
                 <div className="flex flex-wrap justify-center">
-                    {this.state.loading && [1, 2, 3, 4, 5, 6, 7, 8].map((num, index)=> {
+                    {this.state.loading && [1, 2, 3, 4].map((num, index)=> {
                         return (
-                            <div key={index.toString()} className="w-52 h-74 border rounded bg-gray-300">
+                            <div key={index.toString()} className="w-52 h-80 mx-5 my-2 border rounded bg-gray-300">
                                 <p>Loading</p>
                             </div>
                         )

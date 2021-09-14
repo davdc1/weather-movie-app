@@ -84,17 +84,19 @@ class Weather extends React.Component{
     render(){
         return(
             <div className="flex flex-col items-center justify-center">
-                <div className="my-20">
                     {!this.state.loading && !this.state.error &&
-                    <WeatherFull
-                            showFullDet={this.showFullDet}
-                            data={this.state.data}
-                            show={this.state.fullDet}
-                        />}
+                        <WeatherFull
+                                showFullDet={this.showFullDet}
+                                data={this.state.data}
+                                show={this.state.fullDet}
+                            />
+                    }
+                <div className="my-20">
                     {this.state.error && <span>{this.state.errorDes}</span> }
                     <p>{this.state.loading && <span>loading</span>}</p>
                     {!this.state.loading && !this.state.error &&
-                        <WeatherCard data={this.state.data} showFullDet={this.showFullDet} />}
+                        <WeatherCard data={this.state.data} showFullDet={this.showFullDet} />
+                    }
 
                 </div>
             </div>
